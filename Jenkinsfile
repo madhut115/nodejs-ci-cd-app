@@ -2,8 +2,12 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'  // Must match the Jenkins credentials ID you created
-        IMAGE_NAME = "madhu1520/nodejs-app"              // Replace with your DockerHub username and repo name
+        DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
+        IMAGE_NAME = "madhut115/nodejs-ci-cd-app"
+    }
+
+    tools {
+        nodejs 'Node 18.x'  // This must match the name you configured in Jenkins
     }
 
     stages {
@@ -13,34 +17,31 @@ pipeline {
             }
         }
 
-       stage('Install Dependencies') {
-           steps {
-               bat 'npm install'
-           }
-       }
-
-stage('Run Tests') {
-    steps {
-        bat 'npm test'
-    }
-}
-
-
-        stage('Build Docker Image') {
+        stage('Install Dependencies') {
             steps {
-                bat 'docker build -t madhut115/nodejs-ci-cd-app .'
+                bat 'npm install'
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                bat 'npm test'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat "docker build -t ${IMAGE_NAME} ."
+            }
+        }
 
         stage('Push to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
-                bat 'docker push madhut115/nodejs-ci-cd-app'
+                withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+                    bat "docker push ${IMAGE_NAME}"
                 }
             }
         }
     }
-    }
-
+}
