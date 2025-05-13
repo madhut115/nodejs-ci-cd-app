@@ -13,17 +13,18 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
+       stage('Install Dependencies') {
+           steps {
+               bat 'npm install'
+           }
+       }
 
-        stage('Run Tests') {
-            steps {
-                sh 'npm test'
-            }
-        }
+stage('Run Tests') {
+    steps {
+        bat 'npm test'
+    }
+}
+
 
         stage('Build Docker Image') {
             steps {
