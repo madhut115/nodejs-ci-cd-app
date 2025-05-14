@@ -7,8 +7,9 @@ pipeline {
     }
 
     tools {
-        nodejs 'Node 16.x'  // This must match the name you configured in Jenkins
+        nodejs "Node_16.x"
     }
+
 
     stages {
         stage('Checkout Code') {
