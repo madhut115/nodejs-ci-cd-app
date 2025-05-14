@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
-        IMAGE_NAME = "madhut115/nodejs-ci-cd-app"
+        IMAGE_NAME = "madhu1520/nodejs-app"
     }
 
     tools {
