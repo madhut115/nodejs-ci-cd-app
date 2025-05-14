@@ -7,7 +7,7 @@ pipeline {
     }
 
     tools {
-        nodejs 'Node 18.x'  // This must match the name you configured in Jenkins
+        nodejs 'Node 16.x'  // This must match the name you configured in Jenkins
     }
 
     stages {
