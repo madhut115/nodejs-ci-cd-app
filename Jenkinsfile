@@ -7,7 +7,7 @@ pipeline {
     }
 
     tools {
-        nodejs "Node_16.x"
+        nodejs "Node 16.x"
     }
 
 
